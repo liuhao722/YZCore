@@ -1,8 +1,6 @@
 package com.worth.framework.base.core.utils
 
 import android.util.Log
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
 
 
 object L {
