@@ -1,6 +1,7 @@
 package com.worth.framework.base.core.storage
 
 import android.content.Context
+import android.util.Log
 import com.tencent.mmkv.MMKV
 import com.worth.framework.base.core.exts.nullTo
 import com.worth.framework.base.core.exts.todo
@@ -150,9 +151,7 @@ object MeKVUtil {
                 }
                 else -> false
             }
-            L.d("set-$result")
         }
-
     }
 
     /**

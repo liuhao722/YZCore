@@ -1,14 +1,24 @@
 package com.worth.framework.base.core.utils
 
+import android.content.pm.PackageManager
 import android.util.Log
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 
 object L {
     private const val TAG = "L"
-    private var isDebug: Boolean = true
+    private val isDebug: Boolean = getMetaDataByInt("LOG_ENABLE") == 1
+
+    /**
+     * 获取Int类型的meta标签
+     */
+    private fun getMetaDataByInt(key: String): Int = application?.packageName?.let {
+        val meta = application?.packageManager?.getApplicationInfo(it, PackageManager.GET_META_DATA)
+        meta?.metaData?.getInt(key) ?: 0
+    } ?: 0
+
     fun setDebugConfig(debugConfig: Boolean = true) {
-        isDebug = debugConfig
+
     }
     init {
         Logger.addLogAdapter(AndroidLogAdapter())
