@@ -1,0 +1,100 @@
+import java.text.SimpleDateFormat
+
+/*
+ * 查询的是否是正式版本库
+ */
+def isRelease = true
+
+/*
+ * 要查询的组件库名称
+ * book clock contacts core crossprocess
+ * domain-route film habitclock home login
+ * market message mvvm network note opencv
+ * player plugin-sdk-ireader protection rank
+ * reader recharge sensors smartPush task
+ * user view webview xsengine
+ */
+def mavenName = "core"
+
+/**
+ * 获取某个库的最新版本号
+ */
+task _getVersionCode() {
+    def urlHost = "http://10.0.1.8:8081/artifactory/android_tp_release/com/tpln/"
+    if (!isRelease){
+        urlHost = "http://10.0.1.8:8081/artifactory/android_tp_snapshot/com/tpln/"
+    }
+    URL url = new URL(urlHost + mavenName)
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy HH:mm")
+
+    URLConnection rulConnection = url.openConnection()                                              // 此处的urlConnection对象实际上是根据URL的
+    HttpURLConnection httpUrlConnection = (HttpURLConnection) rulConnection
+    httpUrlConnection.connect()
+    StringBuffer buffer = new StringBuffer();
+    BufferedReader reader = new BufferedReader(new InputStreamReader(httpUrlConnection.getInputStream(), "UTF-8"));
+    def lastUpdateTime = 0
+    def lastUpdateVersionName
+    def line = ""
+    while ((line = reader.readLine()) != null) {
+        if (line.length() > 40 && line.contains("</a>") && !line.contains("maven-metadata.xml")) {
+            def sub = line.substring(line.indexOf("</a>") + 4, line.length()).replaceAll("-", "").trim()
+            def date = trans(sub.trim())
+            def dateStr = simpleDateFormat.parse(date).time
+            if (lastUpdateTime == 0 || lastUpdateTime < dateStr) {
+                lastUpdateTime = dateStr
+                def version = line.substring(line.indexOf("/\">") + 3, line.indexOf("/</a>"))
+                lastUpdateVersionName = version
+            }
+        }
+        buffer.append(line)
+    }
+    println("获取到最新的分支结果：")
+    System.err.println(lastUpdateVersionName)
+    reader.close()
+}
+
+static String trans(String date) {
+    def dataM = date.substring(2, 5)
+    def result
+    switch (dataM) {
+        case "Jan":
+            result = "01"
+            break
+        case "Feb":
+            result = "02"
+            break
+        case "Mar":
+            result = "03"
+            break
+        case "Apr":
+            result = "04"
+            break
+        case "May":
+            result = "05"
+            break
+        case "Jun":
+            result = "06"
+            break
+        case "Jul":
+            result = "07"
+            break
+        case "Aug":
+            result = "08"
+            break
+        case "Sep":
+            result = "09"
+            break
+        case "Oct":
+            result = "10"
+            break
+        case "Nov":
+            result = "11"
+            break
+        case "Dec":
+            result = "12"
+            break
+    }
+    return date.replaceAll(dataM, result)
+}
+
+
