@@ -4,13 +4,11 @@ import android.util.Log
 
 
 object L {
+    private const val TAG = "L"
     private var isDebug: Boolean = true
-    fun setDebugConfig(debugConfig: Boolean) {
+    fun setDebugConfig(debugConfig: Boolean = true) {
         isDebug = debugConfig
     }
-
-    //    private val isDebug: Boolean = loggerEnable == 1
-    private val TAG = L.javaClass.name
 
     @JvmOverloads
     @JvmStatic
