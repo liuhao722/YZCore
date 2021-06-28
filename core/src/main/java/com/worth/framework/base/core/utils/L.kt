@@ -1,13 +1,17 @@
 package com.worth.framework.base.core.utils
 
 import android.util.Log
-
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 
 object L {
     private const val TAG = "L"
     private var isDebug: Boolean = true
     fun setDebugConfig(debugConfig: Boolean = true) {
         isDebug = debugConfig
+    }
+    init {
+        Logger.addLogAdapter(AndroidLogAdapter())
     }
 
     @JvmOverloads
