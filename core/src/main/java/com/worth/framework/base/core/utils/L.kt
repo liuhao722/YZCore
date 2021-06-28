@@ -6,7 +6,7 @@ import android.util.Log
 object L {
     private const val TAG = "L"
 //    private val isDebug: Boolean = logEnable == 1
-    private val isDebug: Boolean = true
+    private var isDebug: Boolean = (logEnable == 1)
 
     fun setDebugConfig(debugConfig: Boolean = true) {
     }
