@@ -79,7 +79,6 @@ dependencies {
 
     api rootProject.ext.dependencies["multidex"]
 
-    api rootProject.ext.dependencies["logger"]
     api rootProject.ext.dependencies["ARouter-api"]
     kapt rootProject.ext.dependencies["ARouter-compiler"]
     annotationProcessor rootProject.ext.dependencies["ARouter-compiler"]
