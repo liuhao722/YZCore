@@ -17,7 +17,8 @@ val logEnable: Int = getMetaDataByInt("LOG_ENABLE")
 
 object L {
     private const val TAG = "L"
-    private val isDebug: Boolean = logEnable == 1
+//    private val isDebug: Boolean = logEnable == 1
+    private val isDebug: Boolean = true
 
     fun setDebugConfig(debugConfig: Boolean = true) {
     }
